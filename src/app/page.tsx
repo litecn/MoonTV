@@ -33,17 +33,17 @@ function HomeClient() {
 
   const [showAnnouncement, setShowAnnouncement] = useState(false);
 
-  // 检查公告弹窗状态
-  useEffect(() => {
-    if (typeof window !== 'undefined' && announcement) {
-      const hasSeenAnnouncement = localStorage.getItem('hasSeenAnnouncement');
-      if (hasSeenAnnouncement !== announcement) {
-        setShowAnnouncement(true);
-      } else {
-        setShowAnnouncement(Boolean(!hasSeenAnnouncement && announcement));
-      }
-    }
-  }, [announcement]);
+  // // 检查公告弹窗状态
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined' && announcement) {
+  //     const hasSeenAnnouncement = localStorage.getItem('hasSeenAnnouncement');
+  //     if (hasSeenAnnouncement !== announcement) {
+  //       setShowAnnouncement(true);
+  //     } else {
+  //       setShowAnnouncement(Boolean(!hasSeenAnnouncement && announcement));
+  //     }
+  //   }
+  // }, [announcement]);
 
   // 收藏夹数据
   type FavoriteItem = {
