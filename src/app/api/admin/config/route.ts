@@ -11,12 +11,34 @@ export const runtime = 'edge';
 export async function GET(request: NextRequest) {
   const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
   if (storageType === 'localstorage') {
-    return NextResponse.json(
-      {
-        error: '不支持本地存储进行管理员配置',
-      },
-      { status: 400 }
-    );
+    // return NextResponse.json(
+    //   {
+    //     error: '不支持本地存储进行管理员配置',
+    //   },
+    //   { status: 400 }
+    // );
+    try {
+      const config = await getConfig();
+      const result: AdminConfigResult = {
+        Role: 'owner',
+        Config: config,
+      };
+
+      return NextResponse.json(result, {
+        headers: {
+          'Cache-Control': 'no-store', // 管理员配置不缓存
+        },
+      });
+    } catch (error) {
+      console.error('获取管理员配置失败:', error);
+      return NextResponse.json(
+        {
+          error: '获取管理员配置失败',
+          details: (error as Error).message,
+        },
+        { status: 500 }
+      );
+    }
   }
 
   const authInfo = getAuthInfoFromCookie(request);
